@@ -1,6 +1,5 @@
 package ir.ac.kntu;
 
-import com.sun.org.apache.xpath.internal.objects.XObject;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -57,15 +56,14 @@ public class Main {
         Object[] keys = new Character[map.size()];
         keys = map.keySet().toArray();
         values = map.values().toArray();
-//        for (int i = 0; i < map.size(); i++) {
-//            System.out.print((Character) keys[i] + " ");
-//
-//        }
-//        System.out.println(map.size());
+        HuffmanNode[] nodes = new HuffmanNode[map.size()];
+        for(int i =0 ; i < map .size() ; i++){
+            int character = (int)keys[i];
+            int value = (int)values[i];
+            nodes[i] = new HuffmanNode(character , value);
 
-        //  System.out.println(keys.toString());
-        //  System.out.println(values.toString());
 
+        }
 
     }
 
