@@ -23,7 +23,7 @@ public class Main {
         HuffmanNode[] nodes = convertMapToArray(map);
 
         HuffmanTree tree = new HuffmanTree(nodes);
-        tree.printArray();
+
         tree.BuildHuffmanTree();
 
 

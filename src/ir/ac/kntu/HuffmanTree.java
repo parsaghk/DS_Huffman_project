@@ -6,12 +6,10 @@ import java.util.HashMap;
 public class HuffmanTree {
 
     private HuffmanNode[] nodes;
-    private HuffmanNode root;
 
     public HuffmanTree(HuffmanNode[] nodes) {
 
         this.nodes = nodes;
-        this.root = null;
         sortNodesByData();
     }
 
@@ -36,24 +34,26 @@ public class HuffmanTree {
 
             for (int j = 0; j < nodes.length - 1; j++) {
 
-                if (nodes[j].data < nodes[j + 1].data) {
-                    HuffmanNode helper;
-                    helper = nodes[j + 1];
-                    nodes[j + 1] = nodes[j];
-                    nodes[j] = helper;
+                if (nodes[j + 1] != null) {
+                    if (nodes[j].data < nodes[j + 1].data) {
+                        HuffmanNode helper;
+                        helper = nodes[j + 1];
+                        nodes[j + 1] = nodes[j];
+                        nodes[j] = helper;
 
 
+                    }
                 }
             }
-
         }
     }
 
     public void printArray() {
 
         for (int i = 0; i < nodes.length; i++) {
-
-            System.out.println(nodes[i].character + " " + nodes[i].data);
+            if (nodes[i] != null) {
+                System.out.println(nodes[i].character + " " + nodes[i].data);
+            }
         }
 
     }
@@ -61,17 +61,15 @@ public class HuffmanTree {
     public void BuildHuffmanTree() {
 
         HuffmanNode right;
-        HuffmanNode left;
-        HuffmanNode root = new HuffmanNode();
+        HuffmanNode left = null;
+        HuffmanNode root;
         int counter = nodes.length - 1;
         while (nodes[1] != null) {
 
             left = nodes[counter];
             right = nodes[counter - 1];
-            root.right = right;
-            root.left = left;
-            root.data = right.data + left.data;
-            root.character = 128;
+
+            root = new HuffmanNode(128 , right.data + left.data , left , right);
 
             nodes[counter] = null;
             nodes[counter - 1] = root;
@@ -79,6 +77,8 @@ public class HuffmanTree {
             sortNodesByData();
             counter--;
             printArray();
+            System.out.println("--------");
+
 
         }
 
