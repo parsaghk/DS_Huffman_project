@@ -68,7 +68,7 @@ public class HuffmanTree {
 
             left = nodes[counter];
             right = nodes[counter -1];
-            
+
 
 
         }
