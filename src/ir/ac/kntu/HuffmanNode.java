@@ -8,6 +8,10 @@ public class HuffmanNode {
     HuffmanNode left;
     HuffmanNode right;
 
+    public HuffmanNode(){
+
+    }
+
     public HuffmanNode(int character, int data) {
         this.character = character;
         this.data = data;

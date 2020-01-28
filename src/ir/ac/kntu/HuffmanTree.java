@@ -58,18 +58,27 @@ public class HuffmanTree {
 
     }
 
-    public void BuildHuffmanTree(){
+    public void BuildHuffmanTree() {
 
         HuffmanNode right;
         HuffmanNode left;
-        HuffmanNode root;
+        HuffmanNode root = new HuffmanNode();
         int counter = nodes.length - 1;
-        while(nodes[1] != null){
+        while (nodes[1] != null) {
 
             left = nodes[counter];
-            right = nodes[counter -1];
+            right = nodes[counter - 1];
+            root.right = right;
+            root.left = left;
+            root.data = right.data + left.data;
+            root.character = 128;
 
+            nodes[counter] = null;
+            nodes[counter - 1] = root;
 
+            sortNodesByData();
+            counter--;
+            printArray();
 
         }
 
