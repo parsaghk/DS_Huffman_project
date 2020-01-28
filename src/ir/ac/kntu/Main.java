@@ -14,12 +14,18 @@ public class Main {
         HashMap<Character, Integer> map = new HashMap<>();
 
         map = analyzeText("./src/ir/ac/kntu/text.txt");
+//
+//        map.entrySet().forEach(entry -> {
+//            System.out.println(entry.getValue() + " " +  entry.getKey());
+//
+//        });
 
-        map.entrySet().forEach(entry -> {
-            System.out.println(entry.getValue() + " " + (int) entry.getKey());
+        HuffmanNode[] nodes = convertMapToArray(map);
 
-        });
-        convertMapToArray(map);
+        HuffmanTree tree = new HuffmanTree(nodes);
+
+        tree.printArray();
+
 
     }
 
@@ -50,20 +56,22 @@ public class Main {
         return map;
     }
 
-    public static void convertMapToArray(HashMap<Character, Integer> map) {
+    public static HuffmanNode[] convertMapToArray(HashMap<Character, Integer> map) {
 
         Object[] values = new Integer[map.size()];
         Object[] keys = new Character[map.size()];
         keys = map.keySet().toArray();
         values = map.values().toArray();
         HuffmanNode[] nodes = new HuffmanNode[map.size()];
-        for(int i =0 ; i < map .size() ; i++){
-            int character = (int)keys[i];
-            int value = (int)values[i];
-            nodes[i] = new HuffmanNode(character , value);
-
+        for (int i = 0; i < map.size(); i++) {
+            char ch = (char) keys[i];
+            int character = (int) ch;
+            int value = (int) values[i];
+            nodes[i] = new HuffmanNode(character, value);
 
         }
+
+        return nodes;
 
     }
 
