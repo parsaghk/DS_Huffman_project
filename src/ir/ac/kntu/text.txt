@@ -1,6 +1,5 @@
 <<<<<<< HEAD
-aa bbb c
-dddd ef
+Fuck this shit
 =======
 Hello parsa
 >>>>>>> 4ba3ca77dfc5ee408996d5aa47916fa2a3435e40
