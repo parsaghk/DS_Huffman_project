@@ -15,17 +15,22 @@ public class Main {
 
         map = analyzeText("./src/ir/ac/kntu/text.txt");
 //
-//        map.entrySet().forEach(entry -> {
-//            System.out.println(entry.getValue() + " " +  entry.getKey());
-//
-//        });
+        System.out.println("This is map");
+        map.entrySet().forEach(entry -> {
+            System.out.println(entry.getValue() + " " +  entry.getKey());
+
+        });
+        System.out.println("-------");
 
         HuffmanNode[] nodes = convertMapToArray(map);
 
         HuffmanTree tree = new HuffmanTree(nodes);
 
-        tree.BuildHuffmanTree();
+        System.out.println("These are codes");
+        tree.mapCodes.entrySet().forEach(entry ->{
 
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        });
 
     }
 

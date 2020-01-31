@@ -1,31 +1,37 @@
 package ir.ac.kntu;
 
-import java.lang.reflect.Array;
 import java.util.HashMap;
 
 public class HuffmanTree {
 
     private HuffmanNode[] nodes;
+    HashMap<Integer, String> mapCodes;
+    HuffmanNode root;
 
     public HuffmanTree(HuffmanNode[] nodes) {
-
+        mapCodes = new HashMap<>();
         this.nodes = nodes;
         sortNodesByData();
+        buildHuffmanTree();
+        root = nodes[0];
+        buildCode(root, "");
     }
 
-    public static void printCode(HuffmanNode root, String s) {
-
+    public void buildCode(HuffmanNode root, String s) {
+        System.out.println(root.character + " " + root.data);
         if (root.left
                 == null
                 && root.right
-                == null
-                && Character.isLetter(root.character)) {
-
-            // c is the character in the node
-            System.out.println(root.character + ":" + s);
-
-
+                == null) {
+            mapCodes.put(root.character, s);
         }
+        // c is the character in the node
+        if (root.right != null)
+            buildCode(root.right, s + "1");
+        if (root.left != null)
+            buildCode(root.left, s + "0");
+
+
     }
 
     public void sortNodesByData() {
@@ -58,7 +64,7 @@ public class HuffmanTree {
 
     }
 
-    public void BuildHuffmanTree() {
+    public void buildHuffmanTree() {
 
         HuffmanNode right;
         HuffmanNode left = null;
@@ -69,7 +75,7 @@ public class HuffmanTree {
             left = nodes[counter];
             right = nodes[counter - 1];
 
-            root = new HuffmanNode(128 , right.data + left.data , left , right);
+            root = new HuffmanNode(128, right.data + left.data, left, right);
 
             nodes[counter] = null;
             nodes[counter - 1] = root;
@@ -84,5 +90,6 @@ public class HuffmanTree {
 
 
     }
+
 
 }
