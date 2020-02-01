@@ -14,7 +14,7 @@ public class Main {
         HashMap<Character, Integer> map = new HashMap<>();
 
         map = analyzeText("./src/ir/ac/kntu/text.txt");
-//
+
         System.out.println("This is map");
         map.entrySet().forEach(entry -> {
             System.out.println(entry.getValue() + " " +  entry.getKey());
@@ -33,9 +33,12 @@ public class Main {
         });
         System.out.println("------");
         System.out.println("Begin write code");
-        tree.writeCode();
+        tree.compressCode();
 
         System.out.println("Extract code");
+        tree.extractCode();
+
+        System.out.println("bytes");
         tree.extractCode();
 
     }
