@@ -31,6 +31,12 @@ public class Main {
 
             System.out.println(entry.getKey() + ": " + entry.getValue());
         });
+        System.out.println("------");
+        System.out.println("Begin write code");
+        tree.writeCode();
+
+        System.out.println("Extract code");
+        tree.extractCode();
 
     }
 

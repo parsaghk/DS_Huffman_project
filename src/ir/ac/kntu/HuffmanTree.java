@@ -1,14 +1,17 @@
 package ir.ac.kntu;
 
+import java.io.*;
 import java.util.HashMap;
 
 public class HuffmanTree {
 
     private HuffmanNode[] nodes;
-    HashMap<Integer, String> mapCodes;
+    HashMap<String, Integer> mapCodes;
+    HashMap<Integer, String> codeMap;
     HuffmanNode root;
 
     public HuffmanTree(HuffmanNode[] nodes) {
+        codeMap = new HashMap<>();
         mapCodes = new HashMap<>();
         this.nodes = nodes;
         sortNodesByData();
@@ -23,7 +26,8 @@ public class HuffmanTree {
                 == null
                 && root.right
                 == null) {
-            mapCodes.put(root.character, s);
+            mapCodes.put(s, root.character);
+            codeMap.put(root.character, s);
         }
         // c is the character in the node
         if (root.right != null)
@@ -92,4 +96,85 @@ public class HuffmanTree {
     }
 
 
+    public void writeCode() {
+        try {
+
+            FileReader reader = new FileReader("./src/ir/ac/kntu/text.txt");
+            FileWriter writer = new FileWriter("./src/ir/ac/kntu/compressed.txt");
+
+
+            int ascii;
+            while ((ascii = reader.read()) != -1) {
+                writer.write(findCode(ascii));
+
+
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+
+        }
+
+    }
+
+    public String findCode(int character) {
+
+        return codeMap.get(character);
+
+    }
+
+    public void extractCode() {
+        try {
+            FileInputStream reader = new FileInputStream("./src/ir/ac/kntu/compressed.txt");
+            FileOutputStream writer = new FileOutputStream("./src/ir/ac/kntu/extract.txt");
+            String ascii = "";
+            int num;
+            while ((num = reader.read()) != -1) {
+                char c = (char) num;
+                ascii += Character.toString(c);
+                System.out.println(ascii);
+                if (mapCodes.containsKey(ascii)) {
+
+                    int ch = mapCodes.get(ascii);
+                    System.out.println(ch);
+                    char character = (char) ch;
+
+                    System.out.println(character);
+                    writer.write(Character.toString(character));
+                    ascii = "";
+
+                }
+
+
+            }
+
+            writer.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+    public void byteSavaing (){
+
+        try {
+            FileInputStream input = new FileInputStream("./src/ir/ac/kntu/compressed.txt");
+            FileOutputStream output= new FileOutputStream("./src/ir/ac/kntu/compressedByte.txt");
+
+            while(true){
+
+
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
 }
