@@ -1,6 +1,7 @@
 package ir.ac.kntu;
 
 import java.io.*;
+import java.nio.Buffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -199,11 +200,11 @@ public class HuffmanTree {
                     for (int j = 0; j < strlength % 8 - subString.length(); j++) {
                         zeros += "0";
                     }
-                }else{
-                    zeros = zeros +subString;
+                } else {
+                    zeros = zeros + subString;
                 }
             }
-            System.out.println(zeros);
+            writeExtractCode(zeros);
 
 
         } catch (IOException e) {
@@ -211,6 +212,50 @@ public class HuffmanTree {
         }
     }
 
+    private void writeExtractCode(String zeros) {
+
+        try {
+            FileWriter writer = new FileWriter("./src/ir/ac/kntu/extract.txt");
+
+            String code = "";
+            for (int i = 0; i < zeros.length(); i++) {
+                code += Character.toString(zeros.charAt(i));
+                if (mapCodes.containsKey(code)) {
+                    int ch = mapCodes.get(code);
+                    char character = (char) ch;
+                    writer.write(Character.toString(character));
+                    code = "";
+                }
+
+            }
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void compressedText() {
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("./src/ir/ac/kntu/text.txt"));
+            BufferedWriter writer = new BufferedWriter((new FileWriter("./src/ir/ac/kntu/compressed.txt")));
+
+            int ascii;
+            while ((ascii = reader.read()) != -1) {
+                writer.write(findCode(ascii));
+            }
+
+            writer.close();
+
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+
+    }
 
     public void byteCompressing() {
 
@@ -228,4 +273,20 @@ public class HuffmanTree {
 
 
     }
+
+
+//    void convertMaptoCode(){
+//
+//
+//        String code="";
+//        mapCodes.entrySet().forEach(entry ->{
+//
+//            code+= entry.getKey() + " " + entry.ge
+//        });
+//
+//
+//    }
+//
+//    void writeMapcode(){}
+
 }

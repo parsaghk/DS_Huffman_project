@@ -36,8 +36,11 @@ public class Main {
         System.out.println("Begin write code");
         tree.compressCode();
 
+        System.out.println("begin write text code");
+        tree.compressedText();
         System.out.println("Extract code");
         tree.extractCode();
+
 
 //        System.out.println("bytes");
 //        tree.extractCode();
