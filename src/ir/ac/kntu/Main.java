@@ -39,8 +39,8 @@ public class Main {
         System.out.println("Extract code");
         tree.extractCode();
 
-        System.out.println("bytes");
-        tree.extractCode();
+//        System.out.println("bytes");
+//        tree.extractCode();
 
     }
 

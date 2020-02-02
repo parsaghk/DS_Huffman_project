@@ -114,8 +114,9 @@ public class HuffmanTree {
 
 
             }
+            writer.write((byte) code.length());
             String subCode;
-            for (int i = 0; i < code.length() - 7; i += 8) {
+            for (int i = 0; i < code.length(); i += 8) {
                 subCode = code.substring(i, Math.min(code.length(), i + 8));
                 writer.write((byte) Integer.parseInt(subCode, 2));
 
@@ -165,30 +166,50 @@ public class HuffmanTree {
         try {
             Path path = Paths.get("./src/ir/ac/kntu/comp.txt");
             byte[] bytes = Files.readAllBytes(path);
-            String code = "";
-//            code = new String(bytes , StandardCharsets.ISO_8859_1);
-            for (int i = 0 ;i<bytes.length;i++){
-                byte c = bytes[i];
-//                System.out.println(code);
-//                code += String.format("%8s",Integer.toBinaryString(c & 0xFF).replace(' ','0'));
-//                System.out.println(Integer.toBinaryString(c));
-
-
+            String zeros = "";
+            int byteToInt;
+            byte tempByte;
+            String subString;
+            int i;
+            int strlength = bytes[0];
+            for (i = 1; i < bytes.length - 1; i++) {
+                tempByte = bytes[i];
+                byteToInt = tempByte;
+                subString = Integer.toBinaryString(byteToInt);
+                if (byteToInt < 0) {
+                    subString = subString.substring(24, 32);
+                }
+                for (int j = 0; j < 8 - subString.length(); j++) {
+                    zeros += "0";
+                }
+                zeros = zeros + subString;
             }
-            String s = new String(bytes);
-            System.out.println(s);
-//            System.out.println(code);
-
-
+            tempByte = bytes[i];
+            byteToInt = tempByte;
+            subString = Integer.toBinaryString(byteToInt);
+            if (byteToInt < 0) {
+                subString = subString.substring(24, 32);
+            }
+            if (strlength % 8 == 0) {
+                for (int j = 0; j < 8 - subString.length(); j++) {
+                    zeros += "0";
+                }
+            } else {
+                if (strlength % 8 > subString.length()) {
+                    for (int j = 0; j < strlength % 8 - subString.length(); j++) {
+                        zeros += "0";
+                    }
+                }else{
+                    zeros = zeros +subString;
+                }
+            }
+            System.out.println(zeros);
 
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-
-
 
 
     public void byteCompressing() {
