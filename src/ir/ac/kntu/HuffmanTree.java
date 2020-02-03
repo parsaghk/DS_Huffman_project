@@ -275,18 +275,61 @@ public class HuffmanTree {
     }
 
 
-//    void convertMaptoCode(){
-//
-//
-//        String code="";
-//        mapCodes.entrySet().forEach(entry ->{
-//
-//            code+= entry.getKey() + " " + entry.ge
-//        });
-//
-//
-//    }
-//
-//    void writeMapcode(){}
+    void convertMaptoCode() {
+
+        String mapString = "";
+        Object[] codes = mapCodes.keySet().toArray(); //string
+        Object[] asciis = mapCodes.values().toArray();//integer
+        int size = codes.length;
+        for (int i = 0; i < size; i++) {
+            int ascii = (int) asciis[i];
+            String code = (String) codes[i];
+            mapString +=
+            putCodeIn8bit(Integer.toBinaryString(ascii))+
+            putCodeIn8bit(Integer.toBinaryString(code.length()))+
+            putCodeIn8bit(code);
+
+
+        }
+        System.out.println(mapString);
+        extractMapCode(mapString);
+
+
+    }
+
+    void extractMapCode(String code) {
+        String[] array = new String[code.length() / 8];
+        int counter = 0;
+        String str = "";
+        for (int i = 0; i < code.length(); i += 8) {
+
+            array[counter] = code.substring(i, i + 8);
+
+            counter++;
+        }
+
+        int ascii;
+        int count;
+        for(int i = 0 ; i < array.length/3 ; i+=3){
+            ascii =Integer.parseInt(array[i]);
+            count = Integer.parseInt(array[i+1]);
+            String huffmanCode;
+            
+
+
+        }
+
+    }
+
+    private String putCodeIn8bit(String value) {
+
+        while (value.length() % 8 != 0) {
+
+            value = "0" + value;
+
+        }
+        return value;
+    }
+
 
 }

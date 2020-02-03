@@ -1,10 +1,7 @@
 package ir.ac.kntu;
 
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 
 public class Main {
@@ -18,7 +15,7 @@ public class Main {
 
         System.out.println("This is map");
         map.entrySet().forEach(entry -> {
-            System.out.println(entry.getValue() + " " +  entry.getKey());
+            System.out.println(entry.getValue() + " " + entry.getKey());
 
         });
         System.out.println("-------");
@@ -28,7 +25,7 @@ public class Main {
         HuffmanTree tree = new HuffmanTree(nodes);
 
         System.out.println("These are codes");
-        tree.mapCodes.entrySet().forEach(entry ->{
+        tree.mapCodes.entrySet().forEach(entry -> {
 
             System.out.println(entry.getKey() + ": " + entry.getValue());
         });
@@ -41,9 +38,15 @@ public class Main {
         System.out.println("Extract code");
         tree.extractCode();
 
-
+        File normalFile = new File("./src/ir/ac/kntu/text.txt");
+        File compressedFile = new File("./src/ir/ac/kntu/comp.txt");
+        System.out.println(
+                "Original   File size: " + normalFile.length() + " Bytes" + "\n" +
+                "Compressed File size: " + compressedFile.length() + " Bytes");
 //        System.out.println("bytes");
 //        tree.extractCode();
+        System.out.println("Convert map to code");
+        tree.convertMaptoCode();
 
     }
 
