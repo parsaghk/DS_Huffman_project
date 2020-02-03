@@ -110,11 +110,25 @@ public class HuffmanTree {
             FileOutputStream writer = new FileOutputStream("./src/ir/ac/kntu/comp.txt");
             String code = "";
             int ascii;
+            String mapcode;
+            String submapcode;
             while ((ascii = reader.read()) != -1) {
                 code += findCode(ascii);
 
 
             }
+            mapcode = convertMaptoCode();
+            String mapcodeLength = Integer.toBinaryString(mapcode.length());
+            code = putCodeIn8bit(mapcodeLength) + mapcode + code;
+            System.out.println("this is final code");
+            System.out.println(code);
+            //      writer.write((byte)mapcode.length());
+
+//            for (int j=0;j<code.length();j+=8){
+//               submapcode = mapcode.substring(j,Math.min(mapcode.length(),j+8));
+//               writer.write((byte)Integer.parseInt(submapcode,2));
+//
+//            }
             writer.write((byte) code.length());
             String subCode;
             for (int i = 0; i < code.length(); i += 8) {
@@ -204,8 +218,9 @@ public class HuffmanTree {
                     zeros = zeros + subString;
                 }
             }
-            writeExtractCode(zeros);
 
+            System.out.println("all" + zeros);
+            writeExtractCode(zeros);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -216,7 +231,35 @@ public class HuffmanTree {
 
         try {
             FileWriter writer = new FileWriter("./src/ir/ac/kntu/extract.txt");
-
+            HashMap <String,Integer> map = new HashMap<>();
+            int mapcoedeLenth =Integer.parseInt( zeros.substring(0,8),2);
+            String mapcode = zeros.substring(8,8+mapcoedeLenth);
+            String huffmantext=zeros.substring(8+mapcoedeLenth);
+//            System.out.println("mapcode");
+//            System.out.println(mapcode);
+//            System.out.println("huffman code");
+//            System.out.println(huffmancode);
+//            System.out.println("mapcodelenth");
+//            System.out.println(mapcoedeLenth);
+            String huffmancode = "";
+            int ascii;
+            int huffmancodelenght;
+            int bytes;
+            int j = 0;
+            while (j!=mapcoedeLenth){
+                ascii = Integer.parseInt(mapcode.substring(j,j+8),2);
+                huffmancodelenght = Integer.parseInt(mapcode.substring(j+8,j+16),2);
+                j +=16;
+                if (huffmancodelenght%8 == 0)
+                    bytes = huffmancodelenght/8;
+                else
+                    bytes = huffmancodelenght/8 + 1;
+                huffmancode = mapcode.substring(bytes*8-huffmancodelenght,bytes*8);
+                j = j + bytes*8;
+                map.put(huffmancode,ascii);
+            }
+            System.out.println("FUCK");
+            System.out.println(map.toString());
             String code = "";
             for (int i = 0; i < zeros.length(); i++) {
                 code += Character.toString(zeros.charAt(i));
@@ -257,25 +300,8 @@ public class HuffmanTree {
 
     }
 
-    public void byteCompressing() {
 
-        try {
-            FileInputStream input = new FileInputStream("./src/ir/ac/kntu/compressed.txt");
-            FileOutputStream output = new FileOutputStream("./src/ir/ac/kntu/compressedByte.txt");
-
-            while (true) {
-
-
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
-
-    void convertMaptoCode() {
+    public String convertMaptoCode() {
 
         String mapString = "";
         Object[] codes = mapCodes.keySet().toArray(); //string
@@ -285,39 +311,55 @@ public class HuffmanTree {
             int ascii = (int) asciis[i];
             String code = (String) codes[i];
             mapString +=
-            putCodeIn8bit(Integer.toBinaryString(ascii))+
-            putCodeIn8bit(Integer.toBinaryString(code.length()))+
-            putCodeIn8bit(code);
+                    putCodeIn8bit(Integer.toBinaryString(ascii)) +
+                            putCodeIn8bit(Integer.toBinaryString(code.length())) +
+                            putCodeIn8bit(code);
 
 
         }
-        System.out.println(mapString);
+        System.out.println("mapcode : " + mapString);
         extractMapCode(mapString);
-
+        return mapString;
 
     }
 
-    void extractMapCode(String code) {
-        String[] array = new String[code.length() / 8];
+    void extractMapCode(String mapcode) {
+        String[] array = new String[mapcode.length() / 8];
         int counter = 0;
         String str = "";
-        for (int i = 0; i < code.length(); i += 8) {
+        for (int i = 0; i < mapcode.length(); i += 8) {
 
-            array[counter] = code.substring(i, i + 8);
+            array[counter] = mapcode.substring(i, i + 8);
 
             counter++;
         }
 
-        int ascii;
-        int count;
-        for(int i = 0 ; i < array.length/3 ; i+=3){
-            ascii =Integer.parseInt(array[i]);
-            count = Integer.parseInt(array[i+1]);
-            String huffmanCode;
-            
+        int ascii = 0;
+        int count = 0;
+        int j = 0;
+        int huffmanCodeBytes;
+        String huffmanCode = "";
 
+        while (j != array.length) {
+            ascii = Integer.parseInt(array[j], 2);
+            count = Integer.parseInt(array[j + 1], 2);
 
+            j += 2;
+            if (count % 8 == 0) {
+                huffmanCodeBytes = count / 8;
+            } else {
+                huffmanCodeBytes = count / 8 + 1;
+            }
+            for (int m = 0; m < huffmanCodeBytes; m++) {
+                huffmanCode += array[j];
+                j++;
+            }
+            huffmanCode = huffmanCode.substring(huffmanCodeBytes * 8 - count);
+
+            System.out.println("acscci code :" + ascii + "   count huffman : " + count + " huffman code : " + huffmanCode);
+            huffmanCode = "";
         }
+
 
     }
 

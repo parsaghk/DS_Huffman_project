@@ -40,13 +40,14 @@ public class Main {
 
         File normalFile = new File("./src/ir/ac/kntu/text.txt");
         File compressedFile = new File("./src/ir/ac/kntu/comp.txt");
-        System.out.println(
+      System.out.println(
                 "Original   File size: " + normalFile.length() + " Bytes" + "\n" +
                 "Compressed File size: " + compressedFile.length() + " Bytes");
 //        System.out.println("bytes");
-//        tree.extractCode();
+        tree.extractCode();
         System.out.println("Convert map to code");
         tree.convertMaptoCode();
+
 
     }
 
